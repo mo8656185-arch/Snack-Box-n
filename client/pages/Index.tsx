@@ -686,7 +686,7 @@ export default function Index() {
       displayDescription: popupData?.description || product.description,
       promotionalText: popupData?.promotionalText || product.promotionalText,
       walmartLink: popupData?.orderNowLink || product.walmartLink,
-      // Keep original popup data for reference
+      // Keep original popup data for reference (includes all new fields)
       popupData: popupData
     };
 
@@ -1259,7 +1259,7 @@ export default function Index() {
                     <div className="flex items-center gap-1">
                       <span className="text-sm lg:text-base">�����</span>
                       <span className="text-sm lg:text-base">🍫</span>
-                      <span className="text-sm lg:text-base">���</span>
+                      <span className="text-sm lg:text-base">🥨</span>
                       <span className="text-xs text-gray-500 ml-2 font-medium">
                         {product.size}
                       </span>
