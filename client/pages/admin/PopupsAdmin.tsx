@@ -207,10 +207,9 @@ const PopupsAdmin = () => {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-3xl font-bold text-gray-900">Popups Management</h1>
+        <h1 className="text-3xl font-bold text-gray-900">Product Modal Content</h1>
         <p className="text-gray-600 mt-2">
-          Manage promotional popups for each product size. These popups appear
-          when customers click on product cards.
+          Customize the content that appears in the product details modal when customers click on product cards. This includes titles, descriptions, promotional messages, and external links.
         </p>
       </div>
 
