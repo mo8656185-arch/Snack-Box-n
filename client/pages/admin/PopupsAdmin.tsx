@@ -375,7 +375,7 @@ const PopupsAdmin = () => {
                           description="Direct purchase link for this product"
                         >
                           <Input
-                            value={popup.orderNowLink}
+                            value={popup?.orderNowLink || ""}
                             onChange={(e) =>
                               updatePopup(size as keyof AdminData["popups"], {
                                 orderNowLink: e.target.value,
@@ -383,7 +383,7 @@ const PopupsAdmin = () => {
                             }
                             placeholder="https://www.walmart.com/ip/..."
                           />
-                          {popup.orderNowLink && (
+                          {popup?.orderNowLink && (
                             <Button
                               variant="outline"
                               size="sm"
@@ -403,7 +403,7 @@ const PopupsAdmin = () => {
                           description="Text for the 'View Full Details' button"
                         >
                           <Input
-                            value={popup.viewDetailsButtonText}
+                            value={popup?.viewDetailsButtonText || ""}
                             onChange={(e) =>
                               updatePopup(size as keyof AdminData["popups"], {
                                 viewDetailsButtonText: e.target.value,
