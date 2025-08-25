@@ -1106,7 +1106,7 @@ export default function Index() {
                         {/* Popular Badge */}
                         {index === 1 && (
                           <div className="absolute top-3 right-3 bg-gradient-to-r from-orange-500 to-orange-600 text-white px-3 py-1.5 rounded-xl text-sm font-bold shadow-xl">
-                            ��� Popular
+                            �� Popular
                           </div>
                         )}
 
@@ -2056,7 +2056,18 @@ export default function Index() {
                       <div className="mb-6">
                         <div className="bg-gradient-to-r from-logo-green/10 to-green-400/10 border border-logo-green/20 rounded-lg p-4 text-center">
                           <p className="text-logo-green font-bold text-base sm:text-lg">
-                            {selectedProduct.promotionalText}
+                            🎉 {selectedProduct.promotionalText}
+                          </p>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Popup Description (from admin-configured popup data) */}
+                    {selectedProduct.displayDescription && selectedProduct.displayDescription !== selectedProduct.description && (
+                      <div className="mb-6">
+                        <div className="bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200 rounded-lg p-4">
+                          <p className="text-gray-800 leading-relaxed text-base">
+                            {selectedProduct.displayDescription}
                           </p>
                         </div>
                       </div>
