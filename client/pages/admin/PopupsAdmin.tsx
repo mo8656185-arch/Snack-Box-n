@@ -445,8 +445,8 @@ const PopupsAdmin = () => {
 
                     {/* Image Upload */}
                     <ImageUpload
-                      label="Popup Image"
-                      description="Product image for the popup (will use product image if not provided)"
+                      label="Product Image"
+                      description="Custom product image for this modal (will override the default product image)"
                       value={popup?.image || ""}
                       onChange={(url) =>
                         updatePopup(size as keyof AdminData["popups"], {
@@ -454,6 +454,132 @@ const PopupsAdmin = () => {
                         })
                       }
                     />
+
+                    {/* What's Included Section */}
+                    <div className="space-y-4">
+                      <h4 className="text-lg font-semibold text-gray-900">What's Included Items</h4>
+                      <p className="text-sm text-gray-600">Customize the "What's included" section items</p>
+                      {popup?.whatsIncluded?.map((item, index) => (
+                        <div key={index} className="grid grid-cols-1 md:grid-cols-3 gap-4 p-4 border rounded-lg">
+                          <FormGroup label="Icon" description="Icon name (e.g., Package, Gift, CheckCircle)">
+                            <Input
+                              value={item.icon || ""}
+                              onChange={(e) => {
+                                const updatedItems = [...(popup?.whatsIncluded || [])];
+                                updatedItems[index] = { ...item, icon: e.target.value };
+                                updatePopup(size as keyof AdminData["popups"], {
+                                  whatsIncluded: updatedItems,
+                                });
+                              }}
+                              placeholder="Package"
+                            />
+                          </FormGroup>
+                          <FormGroup label="Text" description="Description text for this item">
+                            <Input
+                              value={item.text || ""}
+                              onChange={(e) => {
+                                const updatedItems = [...(popup?.whatsIncluded || [])];
+                                updatedItems[index] = { ...item, text: e.target.value };
+                                updatePopup(size as keyof AdminData["popups"], {
+                                  whatsIncluded: updatedItems,
+                                });
+                              }}
+                              placeholder="Premium variety of snacks"
+                            />
+                          </FormGroup>
+                          <div className="flex items-end">
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={() => {
+                                const updatedItems = (popup?.whatsIncluded || []).filter((_, i) => i !== index);
+                                updatePopup(size as keyof AdminData["popups"], {
+                                  whatsIncluded: updatedItems,
+                                });
+                              }}
+                              className="text-red-600 hover:text-red-700"
+                            >
+                              Remove
+                            </Button>
+                          </div>
+                        </div>
+                      ))}
+                      <Button
+                        variant="outline"
+                        onClick={() => {
+                          const newItem = { icon: "CheckCircle", text: "New item" };
+                          const updatedItems = [...(popup?.whatsIncluded || []), newItem];
+                          updatePopup(size as keyof AdminData["popups"], {
+                            whatsIncluded: updatedItems,
+                          });
+                        }}
+                      >
+                        Add What's Included Item
+                      </Button>
+                    </div>
+
+                    {/* Shipping & Returns Section */}
+                    <div className="space-y-4">
+                      <h4 className="text-lg font-semibold text-gray-900">Shipping & Returns Items</h4>
+                      <p className="text-sm text-gray-600">Customize the "Shipping & Returns" section items</p>
+                      {popup?.shippingReturns?.map((item, index) => (
+                        <div key={index} className="grid grid-cols-1 md:grid-cols-3 gap-4 p-4 border rounded-lg">
+                          <FormGroup label="Icon" description="Icon name (e.g., CheckCircle, Truck)">
+                            <Input
+                              value={item.icon || ""}
+                              onChange={(e) => {
+                                const updatedItems = [...(popup?.shippingReturns || [])];
+                                updatedItems[index] = { ...item, icon: e.target.value };
+                                updatePopup(size as keyof AdminData["popups"], {
+                                  shippingReturns: updatedItems,
+                                });
+                              }}
+                              placeholder="CheckCircle"
+                            />
+                          </FormGroup>
+                          <FormGroup label="Text" description="Description text for this item">
+                            <Input
+                              value={item.text || ""}
+                              onChange={(e) => {
+                                const updatedItems = [...(popup?.shippingReturns || [])];
+                                updatedItems[index] = { ...item, text: e.target.value };
+                                updatePopup(size as keyof AdminData["popups"], {
+                                  shippingReturns: updatedItems,
+                                });
+                              }}
+                              placeholder="Free shipping on orders over $35"
+                            />
+                          </FormGroup>
+                          <div className="flex items-end">
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={() => {
+                                const updatedItems = (popup?.shippingReturns || []).filter((_, i) => i !== index);
+                                updatePopup(size as keyof AdminData["popups"], {
+                                  shippingReturns: updatedItems,
+                                });
+                              }}
+                              className="text-red-600 hover:text-red-700"
+                            >
+                              Remove
+                            </Button>
+                          </div>
+                        </div>
+                      ))}
+                      <Button
+                        variant="outline"
+                        onClick={() => {
+                          const newItem = { icon: "CheckCircle", text: "New shipping/return policy" };
+                          const updatedItems = [...(popup?.shippingReturns || []), newItem];
+                          updatePopup(size as keyof AdminData["popups"], {
+                            shippingReturns: updatedItems,
+                          });
+                        }}
+                      >
+                        Add Shipping & Returns Item
+                      </Button>
+                    </div>
                   </div>
                 </CardContent>
               </Card>
