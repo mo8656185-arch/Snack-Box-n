@@ -237,7 +237,7 @@ const PopupsAdmin = () => {
               const product = getProductForSize(size.toString());
               const popup = data[size as keyof AdminData["popups"]];
               const isConfigured =
-                popup.title && popup.description && popup.orderNowLink;
+                popup?.title && popup?.description && popup?.orderNowLink;
 
               return (
                 <Card key={size} className="text-center">
