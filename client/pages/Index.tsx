@@ -116,9 +116,9 @@ export default function Index() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Control body overflow when modal or popup is open
+  // Control body overflow when modal is open
   useEffect(() => {
-    if (selectedProduct || activePopup) {
+    if (selectedProduct) {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "unset";
@@ -128,7 +128,7 @@ export default function Index() {
     return () => {
       document.body.style.overflow = "unset";
     };
-  }, [selectedProduct, activePopup]);
+  }, [selectedProduct]);
 
   // Enhanced TikTok embed initialization with comprehensive error prevention
   useEffect(() => {
