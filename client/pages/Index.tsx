@@ -1259,7 +1259,7 @@ export default function Index() {
                     <div className="flex items-center gap-1">
                       <span className="text-sm lg:text-base">�����</span>
                       <span className="text-sm lg:text-base">🍫</span>
-                      <span className="text-sm lg:text-base">🥨</span>
+                      <span className="text-sm lg:text-base">���</span>
                       <span className="text-xs text-gray-500 ml-2 font-medium">
                         {product.size}
                       </span>
@@ -2057,10 +2057,7 @@ export default function Index() {
                       <ShoppingCart className="w-5 h-5 sm:w-6 sm:h-6" />
                       <div className="flex flex-col">
                         <span className="font-black text-sm sm:text-base">
-                          BUY NOW ON
-                        </span>
-                        <span className="font-black text-yellow-300 text-sm sm:text-base">
-                          WALMART
+                          {selectedProduct.popupData?.buyButtonText || "BUY NOW ON WALMART"}
                         </span>
                       </div>
                       <div className="bg-yellow-400 text-blue-800 px-2 py-1 sm:px-3 sm:py-1.5 rounded-full text-sm sm:text-base font-black">
