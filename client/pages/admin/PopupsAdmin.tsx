@@ -465,7 +465,7 @@ const PopupsAdmin = () => {
             <CardHeader>
               <CardTitle className="text-blue-900 text-lg flex items-center gap-2">
                 <Package2 className="w-5 h-5" />
-                How Product Popups Work
+                How Product Modal Content Works
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -474,9 +474,9 @@ const PopupsAdmin = () => {
                   <h4 className="font-semibold mb-2">User Flow:</h4>
                   <ol className="space-y-1 list-decimal list-inside">
                     <li>Customer clicks on a product card</li>
-                    <li>Popup appears with size-specific messaging</li>
-                    <li>Customer can "Order Now" (goes to purchase)</li>
-                    <li>Or "View Full Details" (opens product modal)</li>
+                    <li>Product details modal opens immediately</li>
+                    <li>Your custom content appears integrated in the modal</li>
+                    <li>Customer can "Buy Now" (goes to purchase link)</li>
                   </ol>
                 </div>
                 <div>
