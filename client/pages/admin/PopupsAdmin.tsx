@@ -15,42 +15,12 @@ import { Eye, Package2, ShoppingCart, ExternalLink } from "lucide-react";
 type PopupData = AdminData["popups"][35];
 
 const PopupsAdmin = () => {
-  const [data, setData] = useState<AdminData["popups"]>({
-    35: {
-      title: "",
-      description: "",
-      image: "",
-      promotionalText: "",
-      orderNowLink: "",
-      viewDetailsButtonText: "View Full Details",
-    },
-    42: {
-      title: "",
-      description: "",
-      image: "",
-      promotionalText: "",
-      orderNowLink: "",
-      viewDetailsButtonText: "View Full Details",
-    },
-    52: {
-      title: "",
-      description: "",
-      image: "",
-      promotionalText: "",
-      orderNowLink: "",
-      viewDetailsButtonText: "View Full Details",
-    },
-    105: {
-      title: "",
-      description: "",
-      image: "",
-      promotionalText: "",
-      orderNowLink: "",
-      viewDetailsButtonText: "View Full Details",
-    },
-  });
+  // Initialize with null to show loading state, then load actual data
+  const [data, setData] = useState<AdminData["popups"] | null>(null);
   const [saving, setSaving] = useState(false);
-  const [originalData, setOriginalData] = useState<AdminData["popups"]>(data);
+  const [originalData, setOriginalData] = useState<AdminData["popups"] | null>(
+    null,
+  );
   const [products, setProducts] = useState<AdminData["products"]>([]);
   const [previewPopup, setPreviewPopup] = useState<{
     popup: PopupData;
@@ -59,12 +29,15 @@ const PopupsAdmin = () => {
 
   useEffect(() => {
     const adminData = getAdminData();
+    // Load existing popup data or use defaults
     setData(adminData.popups);
     setOriginalData(adminData.popups);
     setProducts(adminData.products);
   }, []);
 
   const handleSave = async () => {
+    if (!data) return;
+
     setSaving(true);
     try {
       saveAdminData({ popups: data });
@@ -78,17 +51,22 @@ const PopupsAdmin = () => {
   };
 
   const handleReset = () => {
-    setData(originalData);
+    if (originalData) {
+      setData(originalData);
+    }
   };
 
   const updatePopup = (
     size: keyof AdminData["popups"],
     updates: Partial<PopupData>,
   ) => {
-    setData((prev) => ({
-      ...prev,
-      [size]: { ...prev[size], ...updates },
-    }));
+    setData((prev) => {
+      if (!prev) return prev;
+      return {
+        ...prev,
+        [size]: { ...prev[size], ...updates },
+      };
+    });
   };
 
   const getProductForSize = (size: string) => {
@@ -126,7 +104,7 @@ const PopupsAdmin = () => {
         </button>
 
         <div className="p-6">
-          {popup.image && (
+          {popup?.image && (
             <div className="mb-4">
               <img
                 src={popup.image}
@@ -136,19 +114,19 @@ const PopupsAdmin = () => {
             </div>
           )}
 
-          {popup.title && (
+          {popup?.title && (
             <h3 className="text-xl font-bold text-gray-900 mb-3">
               {popup.title}
             </h3>
           )}
 
-          {popup.description && (
+          {popup?.description && (
             <p className="text-gray-600 mb-4 leading-relaxed">
               {popup.description}
             </p>
           )}
 
-          {popup.promotionalText && (
+          {popup?.promotionalText && (
             <div className="bg-gradient-to-r from-logo-green/10 to-green-400/10 border border-logo-green/20 rounded-lg p-3 mb-4">
               <p className="text-logo-green font-semibold text-sm">
                 🎉 {popup.promotionalText}
@@ -157,7 +135,7 @@ const PopupsAdmin = () => {
           )}
 
           <div className="flex gap-3">
-            {popup.orderNowLink && (
+            {popup?.orderNowLink && (
               <Button
                 className="flex-1 bg-logo-green hover:bg-green-600 text-white font-bold"
                 onClick={() => {
@@ -178,7 +156,7 @@ const PopupsAdmin = () => {
               }}
             >
               <Eye className="w-4 h-4 mr-2" />
-              {popup.viewDetailsButtonText}
+              {popup?.viewDetailsButtonText || "View Full Details"}
             </Button>
           </div>
         </div>
@@ -213,13 +191,33 @@ const PopupsAdmin = () => {
     },
   ];
 
+  // Show loading state while data loads
+  if (!data || !originalData) {
+    return (
+      <div className="space-y-8">
+        <div>
+          <h1 className="text-3xl font-bold text-gray-900">
+            Popups Management
+          </h1>
+          <p className="text-gray-600 mt-2">Loading popup data...</p>
+        </div>
+        <div className="flex items-center justify-center py-12">
+          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-logo-green"></div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-3xl font-bold text-gray-900">Popups Management</h1>
+        <h1 className="text-3xl font-bold text-gray-900">
+          Product Modal Content
+        </h1>
         <p className="text-gray-600 mt-2">
-          Manage promotional popups for each product size. These popups appear
-          when customers click on product cards.
+          Customize the content that appears in the product details modal when
+          customers click on product cards. This includes titles, descriptions,
+          promotional messages, and external links.
         </p>
       </div>
 
@@ -233,8 +231,8 @@ const PopupsAdmin = () => {
       )}
 
       <AdminSection
-        title="Product Size Popups"
-        description="Configure popups that appear when customers click on each product card. Each popup should entice customers to make a purchase and provide a way to view full product details."
+        title="Product Modal Content"
+        description="Configure the content that appears in the product details modal when customers click on each product card. This content will be integrated into the main product modal to enhance the customer experience."
         onSave={handleSave}
         onReset={handleReset}
         saving={saving}
@@ -246,7 +244,7 @@ const PopupsAdmin = () => {
               const product = getProductForSize(size.toString());
               const popup = data[size as keyof AdminData["popups"]];
               const isConfigured =
-                popup.title && popup.description && popup.orderNowLink;
+                popup?.title && popup?.description && popup?.orderNowLink;
 
               return (
                 <Card key={size} className="text-center">
@@ -335,7 +333,7 @@ const PopupsAdmin = () => {
                           description="Compelling headline for this product size"
                         >
                           <Input
-                            value={popup.title}
+                            value={popup?.title || ""}
                             onChange={(e) =>
                               updatePopup(size as keyof AdminData["popups"], {
                                 title: e.target.value,
@@ -350,7 +348,7 @@ const PopupsAdmin = () => {
                           description="Detailed description that highlights the benefits of this size"
                         >
                           <Textarea
-                            value={popup.description}
+                            value={popup?.description || ""}
                             onChange={(e) =>
                               updatePopup(size as keyof AdminData["popups"], {
                                 description: e.target.value,
@@ -366,7 +364,7 @@ const PopupsAdmin = () => {
                           description="Special offer or highlight for this product"
                         >
                           <Input
-                            value={popup.promotionalText}
+                            value={popup?.promotionalText || ""}
                             onChange={(e) =>
                               updatePopup(size as keyof AdminData["popups"], {
                                 promotionalText: e.target.value,
@@ -384,7 +382,7 @@ const PopupsAdmin = () => {
                           description="Direct purchase link for this product"
                         >
                           <Input
-                            value={popup.orderNowLink}
+                            value={popup?.orderNowLink || ""}
                             onChange={(e) =>
                               updatePopup(size as keyof AdminData["popups"], {
                                 orderNowLink: e.target.value,
@@ -392,7 +390,7 @@ const PopupsAdmin = () => {
                             }
                             placeholder="https://www.walmart.com/ip/..."
                           />
-                          {popup.orderNowLink && (
+                          {popup?.orderNowLink && (
                             <Button
                               variant="outline"
                               size="sm"
@@ -408,17 +406,17 @@ const PopupsAdmin = () => {
                         </FormGroup>
 
                         <FormGroup
-                          label="View Details Button Text"
-                          description="Text for the 'View Full Details' button"
+                          label="Buy Button Text"
+                          description="Text for the purchase button in the product modal"
                         >
                           <Input
-                            value={popup.viewDetailsButtonText}
+                            value={popup?.buyButtonText || ""}
                             onChange={(e) =>
                               updatePopup(size as keyof AdminData["popups"], {
-                                viewDetailsButtonText: e.target.value,
+                                buyButtonText: e.target.value,
                               })
                             }
-                            placeholder="View Full Details"
+                            placeholder="BUY NOW ON WALMART"
                           />
                         </FormGroup>
 
@@ -436,10 +434,10 @@ const PopupsAdmin = () => {
                                   updatePopup(
                                     size as keyof AdminData["popups"],
                                     {
-                                      title: product.shortName,
-                                      orderNowLink: product.walmartLink,
+                                      title: product?.shortName || "",
+                                      orderNowLink: product?.walmartLink || "",
                                       promotionalText:
-                                        product.promotionalText || "",
+                                        product?.promotionalText || "",
                                     },
                                   )
                                 }
@@ -455,15 +453,203 @@ const PopupsAdmin = () => {
 
                     {/* Image Upload */}
                     <ImageUpload
-                      label="Popup Image"
-                      description="Product image for the popup (will use product image if not provided)"
-                      value={popup.image}
+                      label="Product Image"
+                      description="Custom product image for this modal (will override the default product image)"
+                      value={popup?.image || ""}
                       onChange={(url) =>
                         updatePopup(size as keyof AdminData["popups"], {
                           image: url,
                         })
                       }
                     />
+
+                    {/* What's Included Section */}
+                    <div className="space-y-4">
+                      <h4 className="text-lg font-semibold text-gray-900">
+                        What's Included Items
+                      </h4>
+                      <p className="text-sm text-gray-600">
+                        Customize the "What's included" section items
+                      </p>
+                      {popup?.whatsIncluded?.map((item, index) => (
+                        <div
+                          key={index}
+                          className="grid grid-cols-1 md:grid-cols-3 gap-4 p-4 border rounded-lg"
+                        >
+                          <FormGroup
+                            label="Icon"
+                            description="Icon name (e.g., Package, Gift, CheckCircle)"
+                          >
+                            <Input
+                              value={item.icon || ""}
+                              onChange={(e) => {
+                                const updatedItems = [
+                                  ...(popup?.whatsIncluded || []),
+                                ];
+                                updatedItems[index] = {
+                                  ...item,
+                                  icon: e.target.value,
+                                };
+                                updatePopup(size as keyof AdminData["popups"], {
+                                  whatsIncluded: updatedItems,
+                                });
+                              }}
+                              placeholder="Package"
+                            />
+                          </FormGroup>
+                          <FormGroup
+                            label="Text"
+                            description="Description text for this item"
+                          >
+                            <Input
+                              value={item.text || ""}
+                              onChange={(e) => {
+                                const updatedItems = [
+                                  ...(popup?.whatsIncluded || []),
+                                ];
+                                updatedItems[index] = {
+                                  ...item,
+                                  text: e.target.value,
+                                };
+                                updatePopup(size as keyof AdminData["popups"], {
+                                  whatsIncluded: updatedItems,
+                                });
+                              }}
+                              placeholder="Premium variety of snacks"
+                            />
+                          </FormGroup>
+                          <div className="flex items-end">
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={() => {
+                                const updatedItems = (
+                                  popup?.whatsIncluded || []
+                                ).filter((_, i) => i !== index);
+                                updatePopup(size as keyof AdminData["popups"], {
+                                  whatsIncluded: updatedItems,
+                                });
+                              }}
+                              className="text-red-600 hover:text-red-700"
+                            >
+                              Remove
+                            </Button>
+                          </div>
+                        </div>
+                      ))}
+                      <Button
+                        variant="outline"
+                        onClick={() => {
+                          const newItem = {
+                            icon: "CheckCircle",
+                            text: "New item",
+                          };
+                          const updatedItems = [
+                            ...(popup?.whatsIncluded || []),
+                            newItem,
+                          ];
+                          updatePopup(size as keyof AdminData["popups"], {
+                            whatsIncluded: updatedItems,
+                          });
+                        }}
+                      >
+                        Add What's Included Item
+                      </Button>
+                    </div>
+
+                    {/* Shipping & Returns Section */}
+                    <div className="space-y-4">
+                      <h4 className="text-lg font-semibold text-gray-900">
+                        Shipping & Returns Items
+                      </h4>
+                      <p className="text-sm text-gray-600">
+                        Customize the "Shipping & Returns" section items
+                      </p>
+                      {popup?.shippingReturns?.map((item, index) => (
+                        <div
+                          key={index}
+                          className="grid grid-cols-1 md:grid-cols-3 gap-4 p-4 border rounded-lg"
+                        >
+                          <FormGroup
+                            label="Icon"
+                            description="Icon name (e.g., CheckCircle, Truck)"
+                          >
+                            <Input
+                              value={item.icon || ""}
+                              onChange={(e) => {
+                                const updatedItems = [
+                                  ...(popup?.shippingReturns || []),
+                                ];
+                                updatedItems[index] = {
+                                  ...item,
+                                  icon: e.target.value,
+                                };
+                                updatePopup(size as keyof AdminData["popups"], {
+                                  shippingReturns: updatedItems,
+                                });
+                              }}
+                              placeholder="CheckCircle"
+                            />
+                          </FormGroup>
+                          <FormGroup
+                            label="Text"
+                            description="Description text for this item"
+                          >
+                            <Input
+                              value={item.text || ""}
+                              onChange={(e) => {
+                                const updatedItems = [
+                                  ...(popup?.shippingReturns || []),
+                                ];
+                                updatedItems[index] = {
+                                  ...item,
+                                  text: e.target.value,
+                                };
+                                updatePopup(size as keyof AdminData["popups"], {
+                                  shippingReturns: updatedItems,
+                                });
+                              }}
+                              placeholder="Free shipping on orders over $35"
+                            />
+                          </FormGroup>
+                          <div className="flex items-end">
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={() => {
+                                const updatedItems = (
+                                  popup?.shippingReturns || []
+                                ).filter((_, i) => i !== index);
+                                updatePopup(size as keyof AdminData["popups"], {
+                                  shippingReturns: updatedItems,
+                                });
+                              }}
+                              className="text-red-600 hover:text-red-700"
+                            >
+                              Remove
+                            </Button>
+                          </div>
+                        </div>
+                      ))}
+                      <Button
+                        variant="outline"
+                        onClick={() => {
+                          const newItem = {
+                            icon: "CheckCircle",
+                            text: "New shipping/return policy",
+                          };
+                          const updatedItems = [
+                            ...(popup?.shippingReturns || []),
+                            newItem,
+                          ];
+                          updatePopup(size as keyof AdminData["popups"], {
+                            shippingReturns: updatedItems,
+                          });
+                        }}
+                      >
+                        Add Shipping & Returns Item
+                      </Button>
+                    </div>
                   </div>
                 </CardContent>
               </Card>
@@ -475,7 +661,7 @@ const PopupsAdmin = () => {
             <CardHeader>
               <CardTitle className="text-blue-900 text-lg flex items-center gap-2">
                 <Package2 className="w-5 h-5" />
-                How Product Popups Work
+                How Product Modal Content Works
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -484,9 +670,9 @@ const PopupsAdmin = () => {
                   <h4 className="font-semibold mb-2">User Flow:</h4>
                   <ol className="space-y-1 list-decimal list-inside">
                     <li>Customer clicks on a product card</li>
-                    <li>Popup appears with size-specific messaging</li>
-                    <li>Customer can "Order Now" (goes to purchase)</li>
-                    <li>Or "View Full Details" (opens product modal)</li>
+                    <li>Product details modal opens immediately</li>
+                    <li>Your custom content appears integrated in the modal</li>
+                    <li>Customer can "Buy Now" (goes to purchase link)</li>
                   </ol>
                 </div>
                 <div>

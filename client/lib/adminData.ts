@@ -110,7 +110,15 @@ export interface AdminData {
       image: string;
       promotionalText: string;
       orderNowLink: string;
-      viewDetailsButtonText: string;
+      buyButtonText: string;
+      whatsIncluded: Array<{
+        icon: string;
+        text: string;
+      }>;
+      shippingReturns: Array<{
+        icon: string;
+        text: string;
+      }>;
     };
     42: {
       title: string;
@@ -118,7 +126,15 @@ export interface AdminData {
       image: string;
       promotionalText: string;
       orderNowLink: string;
-      viewDetailsButtonText: string;
+      buyButtonText: string;
+      whatsIncluded: Array<{
+        icon: string;
+        text: string;
+      }>;
+      shippingReturns: Array<{
+        icon: string;
+        text: string;
+      }>;
     };
     52: {
       title: string;
@@ -126,7 +142,15 @@ export interface AdminData {
       image: string;
       promotionalText: string;
       orderNowLink: string;
-      viewDetailsButtonText: string;
+      buyButtonText: string;
+      whatsIncluded: Array<{
+        icon: string;
+        text: string;
+      }>;
+      shippingReturns: Array<{
+        icon: string;
+        text: string;
+      }>;
     };
     105: {
       title: string;
@@ -134,7 +158,15 @@ export interface AdminData {
       image: string;
       promotionalText: string;
       orderNowLink: string;
-      viewDetailsButtonText: string;
+      buyButtonText: string;
+      whatsIncluded: Array<{
+        icon: string;
+        text: string;
+      }>;
+      shippingReturns: Array<{
+        icon: string;
+        text: string;
+      }>;
     };
   };
   footer: {
@@ -461,7 +493,18 @@ const defaultAdminData: AdminData = {
       promotionalText: "Limited time offer with free shipping!",
       orderNowLink:
         "https://www.walmart.com/ip/Gift-a-Snack-35-Count-Snacks-Box-with-Variety-Assortment-of-snack-packs-chips-variety-Crackers-Cookies-Candy/6277108895?classType=VARIANT",
-      viewDetailsButtonText: "View Full Details",
+      buyButtonText: "BUY NOW ON WALMART",
+      whatsIncluded: [
+        { icon: "Package", text: "Premium variety of snacks (35 ct)" },
+        { icon: "Gift", text: "Beautiful gift packaging" },
+        { icon: "CheckCircle", text: "Greeting card included" },
+        { icon: "Truck", text: "Fast shipping across the US" },
+      ],
+      shippingReturns: [
+        { icon: "CheckCircle", text: "Free shipping on orders over $35" },
+        { icon: "CheckCircle", text: "30-day satisfaction guarantee" },
+        { icon: "CheckCircle", text: "Secure packaging guarantee" },
+      ],
     },
     42: {
       title: "Chip Variety Snack Box",
@@ -472,7 +515,18 @@ const defaultAdminData: AdminData = {
       promotionalText: "Best value for families!",
       orderNowLink:
         "https://www.walmart.com/ip/Gift-a-Snack-Chip-Variety-Snack-Box-Snack-Pack-Variety-Box-42-Count/5298521902?classType=VARIANT&athbdg=L1600",
-      viewDetailsButtonText: "View Full Details",
+      buyButtonText: "BUY NOW ON WALMART",
+      whatsIncluded: [
+        { icon: "Package", text: "Premium variety of snacks (42 ct)" },
+        { icon: "Gift", text: "Beautiful gift packaging" },
+        { icon: "CheckCircle", text: "Greeting card included" },
+        { icon: "Truck", text: "Fast shipping across the US" },
+      ],
+      shippingReturns: [
+        { icon: "CheckCircle", text: "Free shipping on orders over $35" },
+        { icon: "CheckCircle", text: "30-day satisfaction guarantee" },
+        { icon: "CheckCircle", text: "Secure packaging guarantee" },
+      ],
     },
     52: {
       title: "Premium Variety Snack Box",
@@ -483,7 +537,18 @@ const defaultAdminData: AdminData = {
       promotionalText: "Customer favorite with best value!",
       orderNowLink:
         "https://www.walmart.com/ip/Gift-a-Snack-52-Count-Snack-Box-with-Variety-Snacks-Chips-Crackers-Cookies-Candy/5915077819?classType=VARIANT&athbdg=L1900",
-      viewDetailsButtonText: "View Full Details",
+      buyButtonText: "BUY NOW ON WALMART",
+      whatsIncluded: [
+        { icon: "Package", text: "Premium variety of snacks (52 ct)" },
+        { icon: "Gift", text: "Beautiful gift packaging" },
+        { icon: "CheckCircle", text: "Greeting card included" },
+        { icon: "Truck", text: "Fast shipping across the US" },
+      ],
+      shippingReturns: [
+        { icon: "CheckCircle", text: "Free shipping on orders over $35" },
+        { icon: "CheckCircle", text: "30-day satisfaction guarantee" },
+        { icon: "CheckCircle", text: "Secure packaging guarantee" },
+      ],
     },
     105: {
       title: "Ultimate Snack Box Collection",
@@ -495,7 +560,18 @@ const defaultAdminData: AdminData = {
         "America's favorite candies, chips, crackers, and bars included!",
       orderNowLink:
         "https://www.walmart.com/ip/Ultimate-Snack-Box-Variety-Pack-105-Count-by-Gift-A-Snack/14496505954?classType=VARIANT",
-      viewDetailsButtonText: "View Full Details",
+      buyButtonText: "BUY NOW ON WALMART",
+      whatsIncluded: [
+        { icon: "Package", text: "Premium variety of snacks (105 ct)" },
+        { icon: "Gift", text: "Beautiful gift packaging" },
+        { icon: "CheckCircle", text: "Greeting card included" },
+        { icon: "Truck", text: "Fast shipping across the US" },
+      ],
+      shippingReturns: [
+        { icon: "CheckCircle", text: "Free shipping on orders over $35" },
+        { icon: "CheckCircle", text: "30-day satisfaction guarantee" },
+        { icon: "CheckCircle", text: "Secure packaging guarantee" },
+      ],
     },
   },
   footer: {

@@ -94,10 +94,6 @@ export default function Index() {
   useSEOData(); // Apply SEO meta tags
 
   const [selectedProduct, setSelectedProduct] = useState<any>(null);
-  const [activePopup, setActivePopup] = useState<{
-    product: any;
-    popupData: any;
-  } | null>(null);
   const [showFloatingButton, setShowFloatingButton] = useState(false);
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
@@ -120,9 +116,9 @@ export default function Index() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Control body overflow when modal or popup is open
+  // Control body overflow when modal is open
   useEffect(() => {
-    if (selectedProduct || activePopup) {
+    if (selectedProduct) {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "unset";
@@ -132,7 +128,7 @@ export default function Index() {
     return () => {
       document.body.style.overflow = "unset";
     };
-  }, [selectedProduct, activePopup]);
+  }, [selectedProduct]);
 
   // Enhanced TikTok embed initialization with comprehensive error prevention
   useEffect(() => {
@@ -678,21 +674,23 @@ export default function Index() {
     return adminData?.popups?.[sizeNumber as keyof typeof adminData.popups];
   };
 
-  // Handle product card click - show popup first
+  // Handle product card click - directly open full modal with popup data integrated
   const handleProductClick = (product: any) => {
     const popupData = getProductPopup(product);
-    if (popupData) {
-      setActivePopup({ product, popupData });
-    } else {
-      // Fallback to direct modal if no popup configured
-      setSelectedProduct(product);
-    }
-  };
 
-  // Open full product modal from popup
-  const openFullProductModal = (product: any) => {
-    setActivePopup(null);
-    setSelectedProduct(product);
+    // Create enhanced product object with popup data integrated
+    const enhancedProduct = {
+      ...product,
+      // Use popup data if available, otherwise fallback to product data
+      displayTitle: popupData?.title || product.shortName || product.name,
+      displayDescription: popupData?.description || product.description,
+      promotionalText: popupData?.promotionalText || product.promotionalText,
+      walmartLink: popupData?.orderNowLink || product.walmartLink,
+      // Keep original popup data for reference (includes all new fields)
+      popupData: popupData,
+    };
+
+    setSelectedProduct(enhancedProduct);
   };
 
   // Swipe to close functionality
@@ -1705,105 +1703,6 @@ export default function Index() {
         </div>
       </footer>
 
-      {/* Product Popup Modal */}
-      {activePopup && (
-        <>
-          {/* Backdrop */}
-          <div
-            className="fixed inset-0 bg-black/60 z-50"
-            style={{ backdropFilter: "blur(5px)" }}
-            onClick={() => setActivePopup(null)}
-          ></div>
-
-          {/* Popup Container */}
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-            <div
-              className="bg-white w-full max-w-md mx-auto rounded-2xl shadow-2xl relative overflow-hidden"
-              style={{
-                animation: "modalSlideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
-              }}
-              onClick={(e) => e.stopPropagation()}
-            >
-              {/* Close Button */}
-              <button
-                onClick={() => setActivePopup(null)}
-                className="absolute top-4 right-4 z-30 w-8 h-8 bg-white/95 backdrop-blur-sm hover:bg-white rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-200 group border border-gray-200"
-              >
-                <X className="w-4 h-4 text-gray-700 group-hover:text-gray-900 group-hover:scale-110 transition-all" />
-              </button>
-
-              <div className="p-6">
-                {/* Product Image */}
-                {(activePopup.popupData.image || activePopup.product.image) && (
-                  <div className="mb-4">
-                    <img
-                      src={
-                        activePopup.popupData.image ||
-                        `${activePopup.product.image}&quality=90&format=webp&width=400`
-                      }
-                      alt={`${activePopup.product.shortName} popup`}
-                      className="w-full h-40 object-contain rounded-lg bg-gray-50 p-2"
-                    />
-                  </div>
-                )}
-
-                {/* Popup Title */}
-                {activePopup.popupData.title && (
-                  <h3 className="text-xl font-bold text-gray-900 mb-3">
-                    {activePopup.popupData.title}
-                  </h3>
-                )}
-
-                {/* Popup Description */}
-                {activePopup.popupData.description && (
-                  <p className="text-gray-600 mb-4 leading-relaxed">
-                    {activePopup.popupData.description}
-                  </p>
-                )}
-
-                {/* Promotional Text */}
-                {activePopup.popupData.promotionalText && (
-                  <div className="bg-gradient-to-r from-logo-green/10 to-green-400/10 border border-logo-green/20 rounded-lg p-3 mb-4">
-                    <p className="text-logo-green font-semibold text-sm">
-                      🎉 {activePopup.popupData.promotionalText}
-                    </p>
-                  </div>
-                )}
-
-                {/* Action Buttons */}
-                <div className="flex gap-3">
-                  {/* Order Now Button */}
-                  {activePopup.popupData.orderNowLink && (
-                    <button
-                      className="flex-1 bg-logo-green hover:bg-green-600 text-white font-bold py-3 px-4 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 shadow-lg hover:shadow-xl"
-                      onClick={() => {
-                        window.open(
-                          activePopup.popupData.orderNowLink,
-                          "_blank",
-                        );
-                      }}
-                    >
-                      <ShoppingCart className="w-5 h-5" />
-                      Order Now
-                    </button>
-                  )}
-
-                  {/* View Full Details Button */}
-                  <button
-                    className="flex-1 border-2 border-blue-500 text-blue-600 hover:bg-blue-50 font-bold py-3 px-4 rounded-xl transition-all duration-300 flex items-center justify-center gap-2"
-                    onClick={() => openFullProductModal(activePopup.product)}
-                  >
-                    <Eye className="w-5 h-5" />
-                    {activePopup.popupData.viewDetailsButtonText ||
-                      "View Full Details"}
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </>
-      )}
-
       {/* Enhanced Floating Buy Now Button (Desktop & Mobile) */}
       {showFloatingButton && (
         <button
@@ -1896,7 +1795,7 @@ export default function Index() {
                   <div className="lg:hidden w-full relative p-4 sm:p-6 flex items-center justify-center bg-gray-50">
                     <div className="relative w-full max-w-[280px] sm:max-w-[320px] mx-auto aspect-square">
                       <img
-                        src={`${selectedProduct.image}&quality=90&format=webp&width=400`}
+                        src={`${selectedProduct.popupData?.image || selectedProduct.image}&quality=90&format=webp&width=400`}
                         alt={`Gift A Snack ${selectedProduct.size} Premium Snack Box with Chips Crackers Cookies and Candy - Detailed Product View`}
                         className="w-full h-full object-contain rounded-2xl shadow-lg bg-white p-2"
                         loading="lazy"
@@ -1938,7 +1837,7 @@ export default function Index() {
                   <div className="hidden lg:flex h-full p-8 items-center justify-center relative">
                     <div className="relative w-full h-full max-w-md mx-auto flex items-center justify-center">
                       <img
-                        src={`${selectedProduct.image}&quality=90&format=webp&width=400`}
+                        src={`${selectedProduct.popupData?.image || selectedProduct.image}&quality=90&format=webp&width=400`}
                         alt={`Gift A Snack ${selectedProduct.size} Premium Snack Box with Chips Crackers Cookies and Candy - Detailed Product View`}
                         className="max-w-full max-h-full object-contain rounded-2xl shadow-2xl"
                         loading="lazy"
@@ -1991,7 +1890,9 @@ export default function Index() {
                     {/* Mobile-Optimized Title + Rating */}
                     <div className="mb-4 sm:mb-6">
                       <h2 className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-bold text-gray-900 leading-tight mb-3 sm:mb-4">
-                        {selectedProduct.shortName || selectedProduct.name}
+                        {selectedProduct.displayTitle ||
+                          selectedProduct.shortName ||
+                          selectedProduct.name}
                       </h2>
 
                       {/* Mobile-Optimized Rating with gold stars */}
@@ -2054,11 +1955,24 @@ export default function Index() {
                       <div className="mb-6">
                         <div className="bg-gradient-to-r from-logo-green/10 to-green-400/10 border border-logo-green/20 rounded-lg p-4 text-center">
                           <p className="text-logo-green font-bold text-base sm:text-lg">
-                            {selectedProduct.promotionalText}
+                            🎉 {selectedProduct.promotionalText}
                           </p>
                         </div>
                       </div>
                     )}
+
+                    {/* Popup Description (from admin-configured popup data) */}
+                    {selectedProduct.displayDescription &&
+                      selectedProduct.displayDescription !==
+                        selectedProduct.description && (
+                        <div className="mb-6">
+                          <div className="bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200 rounded-lg p-4">
+                            <p className="text-gray-800 leading-relaxed text-base">
+                              {selectedProduct.displayDescription}
+                            </p>
+                          </div>
+                        </div>
+                      )}
 
                     {/* Product Description */}
                     <div className="mb-6">
@@ -2091,30 +2005,36 @@ export default function Index() {
                         What's included
                       </h3>
                       <div className="grid grid-cols-1 gap-4">
-                        <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl">
-                          <Package className="w-5 h-5 text-green-600" />
-                          <span className="text-base text-gray-700">
-                            Premium variety of snacks ({selectedProduct.size})
-                          </span>
-                        </div>
-                        <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl">
-                          <Gift className="w-5 h-5 text-green-600" />
-                          <span className="text-base text-gray-700">
-                            Beautiful gift packaging
-                          </span>
-                        </div>
-                        <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl">
-                          <CheckCircle className="w-5 h-5 text-green-600" />
-                          <span className="text-base text-gray-700">
-                            Greeting card included
-                          </span>
-                        </div>
-                        <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl">
-                          <Truck className="w-5 h-5 text-green-600" />
-                          <span className="text-base text-gray-700">
-                            Fast shipping across the US
-                          </span>
-                        </div>
+                        {(
+                          selectedProduct.popupData?.whatsIncluded || [
+                            {
+                              icon: "Package",
+                              text: `Premium variety of snacks (${selectedProduct.size})`,
+                            },
+                            { icon: "Gift", text: "Beautiful gift packaging" },
+                            {
+                              icon: "CheckCircle",
+                              text: "Greeting card included",
+                            },
+                            {
+                              icon: "Truck",
+                              text: "Fast shipping across the US",
+                            },
+                          ]
+                        ).map((item, index) => {
+                          const IconComponent = getIconComponent(item.icon);
+                          return (
+                            <div
+                              key={index}
+                              className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl"
+                            >
+                              <IconComponent className="w-5 h-5 text-green-600" />
+                              <span className="text-base text-gray-700">
+                                {item.text}
+                              </span>
+                            </div>
+                          );
+                        })}
                       </div>
                     </div>
 
@@ -2124,24 +2044,35 @@ export default function Index() {
                         Shipping & Returns
                       </h3>
                       <div className="grid grid-cols-1 gap-3">
-                        <div className="flex items-center gap-3 p-3 bg-blue-50 rounded-xl">
-                          <CheckCircle className="w-5 h-5 text-blue-600" />
-                          <span className="text-base text-gray-700">
-                            Free shipping on orders over $35
-                          </span>
-                        </div>
-                        <div className="flex items-center gap-3 p-3 bg-blue-50 rounded-xl">
-                          <CheckCircle className="w-5 h-5 text-blue-600" />
-                          <span className="text-base text-gray-700">
-                            30-day satisfaction guarantee
-                          </span>
-                        </div>
-                        <div className="flex items-center gap-3 p-3 bg-blue-50 rounded-xl">
-                          <CheckCircle className="w-5 h-5 text-blue-600" />
-                          <span className="text-base text-gray-700">
-                            Secure packaging guarantee
-                          </span>
-                        </div>
+                        {(
+                          selectedProduct.popupData?.shippingReturns || [
+                            {
+                              icon: "CheckCircle",
+                              text: "Free shipping on orders over $35",
+                            },
+                            {
+                              icon: "CheckCircle",
+                              text: "30-day satisfaction guarantee",
+                            },
+                            {
+                              icon: "CheckCircle",
+                              text: "Secure packaging guarantee",
+                            },
+                          ]
+                        ).map((item, index) => {
+                          const IconComponent = getIconComponent(item.icon);
+                          return (
+                            <div
+                              key={index}
+                              className="flex items-center gap-3 p-3 bg-blue-50 rounded-xl"
+                            >
+                              <IconComponent className="w-5 h-5 text-blue-600" />
+                              <span className="text-base text-gray-700">
+                                {item.text}
+                              </span>
+                            </div>
+                          );
+                        })}
                       </div>
                     </div>
                   </div>
@@ -2157,10 +2088,8 @@ export default function Index() {
                       <ShoppingCart className="w-5 h-5 sm:w-6 sm:h-6" />
                       <div className="flex flex-col">
                         <span className="font-black text-sm sm:text-base">
-                          BUY NOW ON
-                        </span>
-                        <span className="font-black text-yellow-300 text-sm sm:text-base">
-                          WALMART
+                          {selectedProduct.popupData?.buyButtonText ||
+                            "BUY NOW ON WALMART"}
                         </span>
                       </div>
                       <div className="bg-yellow-400 text-blue-800 px-2 py-1 sm:px-3 sm:py-1.5 rounded-full text-sm sm:text-base font-black">
