@@ -105,8 +105,8 @@ const AdminDashboard = () => {
       color: "bg-green-500",
     },
     {
-      title: "Popups",
-      description: "Configure promotional popups for each product size",
+      title: "Product Modal Content",
+      description: "Customize product modal content with promotional messaging",
       href: "/admin/popups",
       icon: MessageCircle,
       color: "bg-blue-500",
