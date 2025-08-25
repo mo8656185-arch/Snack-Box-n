@@ -1796,7 +1796,7 @@ export default function Index() {
                   <div className="lg:hidden w-full relative p-4 sm:p-6 flex items-center justify-center bg-gray-50">
                     <div className="relative w-full max-w-[280px] sm:max-w-[320px] mx-auto aspect-square">
                       <img
-                        src={`${selectedProduct.image}&quality=90&format=webp&width=400`}
+                        src={`${(selectedProduct.popupData?.image || selectedProduct.image)}&quality=90&format=webp&width=400`}
                         alt={`Gift A Snack ${selectedProduct.size} Premium Snack Box with Chips Crackers Cookies and Candy - Detailed Product View`}
                         className="w-full h-full object-contain rounded-2xl shadow-lg bg-white p-2"
                         loading="lazy"
