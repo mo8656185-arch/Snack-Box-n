@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://www.giftasnack.com/sitemap.xml
+
+# Crawl-delay for better performance
+Crawl-delay: 1
