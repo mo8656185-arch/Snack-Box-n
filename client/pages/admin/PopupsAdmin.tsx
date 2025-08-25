@@ -34,6 +34,8 @@ const PopupsAdmin = () => {
   }, []);
 
   const handleSave = async () => {
+    if (!data) return;
+
     setSaving(true);
     try {
       saveAdminData({ popups: data });
@@ -47,17 +49,22 @@ const PopupsAdmin = () => {
   };
 
   const handleReset = () => {
-    setData(originalData);
+    if (originalData) {
+      setData(originalData);
+    }
   };
 
   const updatePopup = (
     size: keyof AdminData["popups"],
     updates: Partial<PopupData>,
   ) => {
-    setData((prev) => ({
-      ...prev,
-      [size]: { ...prev[size], ...updates },
-    }));
+    setData((prev) => {
+      if (!prev) return prev;
+      return {
+        ...prev,
+        [size]: { ...prev[size], ...updates },
+      };
+    });
   };
 
   const getProductForSize = (size: string) => {
@@ -462,7 +469,7 @@ const PopupsAdmin = () => {
                   <h4 className="font-semibold mb-2">Best Practices:</h4>
                   <ul className="space-y-1">
                     <li>• Highlight unique benefits of each size</li>
-                    <li>�� Use compelling promotional text</li>
+                    <li>• Use compelling promotional text</li>
                     <li>• Include time-sensitive offers when possible</li>
                     <li>• Test all purchase links regularly</li>
                     <li>• Keep descriptions concise but persuasive</li>
