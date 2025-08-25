@@ -1734,35 +1734,35 @@ export default function Index() {
 
               <div className="p-6">
                 {/* Product Image */}
-                {(activePopup.popupData.image || activePopup.product.image) && (
+                {(activePopup?.popupData?.image || activePopup?.product?.image) && (
                   <div className="mb-4">
                     <img
                       src={
-                        activePopup.popupData.image ||
-                        `${activePopup.product.image}&quality=90&format=webp&width=400`
+                        activePopup?.popupData?.image ||
+                        `${activePopup?.product?.image}&quality=90&format=webp&width=400`
                       }
-                      alt={`${activePopup.product.shortName} popup`}
+                      alt={`${activePopup?.product?.shortName} popup`}
                       className="w-full h-40 object-contain rounded-lg bg-gray-50 p-2"
                     />
                   </div>
                 )}
 
                 {/* Popup Title */}
-                {activePopup.popupData.title && (
+                {activePopup?.popupData?.title && (
                   <h3 className="text-xl font-bold text-gray-900 mb-3">
                     {activePopup.popupData.title}
                   </h3>
                 )}
 
                 {/* Popup Description */}
-                {activePopup.popupData.description && (
+                {activePopup?.popupData?.description && (
                   <p className="text-gray-600 mb-4 leading-relaxed">
                     {activePopup.popupData.description}
                   </p>
                 )}
 
                 {/* Promotional Text */}
-                {activePopup.popupData.promotionalText && (
+                {activePopup?.popupData?.promotionalText && (
                   <div className="bg-gradient-to-r from-logo-green/10 to-green-400/10 border border-logo-green/20 rounded-lg p-3 mb-4">
                     <p className="text-logo-green font-semibold text-sm">
                       🎉 {activePopup.popupData.promotionalText}
@@ -1773,7 +1773,7 @@ export default function Index() {
                 {/* Action Buttons */}
                 <div className="flex gap-3">
                   {/* Order Now Button */}
-                  {activePopup.popupData.orderNowLink && (
+                  {activePopup?.popupData?.orderNowLink && (
                     <button
                       className="flex-1 bg-logo-green hover:bg-green-600 text-white font-bold py-3 px-4 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 shadow-lg hover:shadow-xl"
                       onClick={() => {
@@ -1791,10 +1791,10 @@ export default function Index() {
                   {/* View Full Details Button */}
                   <button
                     className="flex-1 border-2 border-blue-500 text-blue-600 hover:bg-blue-50 font-bold py-3 px-4 rounded-xl transition-all duration-300 flex items-center justify-center gap-2"
-                    onClick={() => openFullProductModal(activePopup.product)}
+                    onClick={() => openFullProductModal(activePopup?.product)}
                   >
                     <Eye className="w-5 h-5" />
-                    {activePopup.popupData.viewDetailsButtonText ||
+                    {activePopup?.popupData?.viewDetailsButtonText ||
                       "View Full Details"}
                   </button>
                 </div>
