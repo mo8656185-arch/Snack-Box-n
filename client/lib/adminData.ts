@@ -110,7 +110,15 @@ export interface AdminData {
       image: string;
       promotionalText: string;
       orderNowLink: string;
-      viewDetailsButtonText: string;
+      buyButtonText: string;
+      whatsIncluded: Array<{
+        icon: string;
+        text: string;
+      }>;
+      shippingReturns: Array<{
+        icon: string;
+        text: string;
+      }>;
     };
     42: {
       title: string;
@@ -118,7 +126,15 @@ export interface AdminData {
       image: string;
       promotionalText: string;
       orderNowLink: string;
-      viewDetailsButtonText: string;
+      buyButtonText: string;
+      whatsIncluded: Array<{
+        icon: string;
+        text: string;
+      }>;
+      shippingReturns: Array<{
+        icon: string;
+        text: string;
+      }>;
     };
     52: {
       title: string;
@@ -126,7 +142,15 @@ export interface AdminData {
       image: string;
       promotionalText: string;
       orderNowLink: string;
-      viewDetailsButtonText: string;
+      buyButtonText: string;
+      whatsIncluded: Array<{
+        icon: string;
+        text: string;
+      }>;
+      shippingReturns: Array<{
+        icon: string;
+        text: string;
+      }>;
     };
     105: {
       title: string;
@@ -134,7 +158,15 @@ export interface AdminData {
       image: string;
       promotionalText: string;
       orderNowLink: string;
-      viewDetailsButtonText: string;
+      buyButtonText: string;
+      whatsIncluded: Array<{
+        icon: string;
+        text: string;
+      }>;
+      shippingReturns: Array<{
+        icon: string;
+        text: string;
+      }>;
     };
   };
   footer: {
