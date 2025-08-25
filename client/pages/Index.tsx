@@ -2027,24 +2027,21 @@ export default function Index() {
                         Shipping & Returns
                       </h3>
                       <div className="grid grid-cols-1 gap-3">
-                        <div className="flex items-center gap-3 p-3 bg-blue-50 rounded-xl">
-                          <CheckCircle className="w-5 h-5 text-blue-600" />
-                          <span className="text-base text-gray-700">
-                            Free shipping on orders over $35
-                          </span>
-                        </div>
-                        <div className="flex items-center gap-3 p-3 bg-blue-50 rounded-xl">
-                          <CheckCircle className="w-5 h-5 text-blue-600" />
-                          <span className="text-base text-gray-700">
-                            30-day satisfaction guarantee
-                          </span>
-                        </div>
-                        <div className="flex items-center gap-3 p-3 bg-blue-50 rounded-xl">
-                          <CheckCircle className="w-5 h-5 text-blue-600" />
-                          <span className="text-base text-gray-700">
-                            Secure packaging guarantee
-                          </span>
-                        </div>
+                        {(selectedProduct.popupData?.shippingReturns || [
+                          { icon: "CheckCircle", text: "Free shipping on orders over $35" },
+                          { icon: "CheckCircle", text: "30-day satisfaction guarantee" },
+                          { icon: "CheckCircle", text: "Secure packaging guarantee" },
+                        ]).map((item, index) => {
+                          const IconComponent = getIconComponent(item.icon);
+                          return (
+                            <div key={index} className="flex items-center gap-3 p-3 bg-blue-50 rounded-xl">
+                              <IconComponent className="w-5 h-5 text-blue-600" />
+                              <span className="text-base text-gray-700">
+                                {item.text}
+                              </span>
+                            </div>
+                          );
+                        })}
                       </div>
                     </div>
                   </div>
