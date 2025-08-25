@@ -687,7 +687,7 @@ export default function Index() {
       promotionalText: popupData?.promotionalText || product.promotionalText,
       walmartLink: popupData?.orderNowLink || product.walmartLink,
       // Keep original popup data for reference (includes all new fields)
-      popupData: popupData
+      popupData: popupData,
     };
 
     setSelectedProduct(enhancedProduct);
@@ -1703,7 +1703,6 @@ export default function Index() {
         </div>
       </footer>
 
-
       {/* Enhanced Floating Buy Now Button (Desktop & Mobile) */}
       {showFloatingButton && (
         <button
@@ -1796,7 +1795,7 @@ export default function Index() {
                   <div className="lg:hidden w-full relative p-4 sm:p-6 flex items-center justify-center bg-gray-50">
                     <div className="relative w-full max-w-[280px] sm:max-w-[320px] mx-auto aspect-square">
                       <img
-                        src={`${(selectedProduct.popupData?.image || selectedProduct.image)}&quality=90&format=webp&width=400`}
+                        src={`${selectedProduct.popupData?.image || selectedProduct.image}&quality=90&format=webp&width=400`}
                         alt={`Gift A Snack ${selectedProduct.size} Premium Snack Box with Chips Crackers Cookies and Candy - Detailed Product View`}
                         className="w-full h-full object-contain rounded-2xl shadow-lg bg-white p-2"
                         loading="lazy"
@@ -1838,7 +1837,7 @@ export default function Index() {
                   <div className="hidden lg:flex h-full p-8 items-center justify-center relative">
                     <div className="relative w-full h-full max-w-md mx-auto flex items-center justify-center">
                       <img
-                        src={`${(selectedProduct.popupData?.image || selectedProduct.image)}&quality=90&format=webp&width=400`}
+                        src={`${selectedProduct.popupData?.image || selectedProduct.image}&quality=90&format=webp&width=400`}
                         alt={`Gift A Snack ${selectedProduct.size} Premium Snack Box with Chips Crackers Cookies and Candy - Detailed Product View`}
                         className="max-w-full max-h-full object-contain rounded-2xl shadow-2xl"
                         loading="lazy"
@@ -1891,7 +1890,9 @@ export default function Index() {
                     {/* Mobile-Optimized Title + Rating */}
                     <div className="mb-4 sm:mb-6">
                       <h2 className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-bold text-gray-900 leading-tight mb-3 sm:mb-4">
-                        {selectedProduct.displayTitle || selectedProduct.shortName || selectedProduct.name}
+                        {selectedProduct.displayTitle ||
+                          selectedProduct.shortName ||
+                          selectedProduct.name}
                       </h2>
 
                       {/* Mobile-Optimized Rating with gold stars */}
@@ -1961,15 +1962,17 @@ export default function Index() {
                     )}
 
                     {/* Popup Description (from admin-configured popup data) */}
-                    {selectedProduct.displayDescription && selectedProduct.displayDescription !== selectedProduct.description && (
-                      <div className="mb-6">
-                        <div className="bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200 rounded-lg p-4">
-                          <p className="text-gray-800 leading-relaxed text-base">
-                            {selectedProduct.displayDescription}
-                          </p>
+                    {selectedProduct.displayDescription &&
+                      selectedProduct.displayDescription !==
+                        selectedProduct.description && (
+                        <div className="mb-6">
+                          <div className="bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200 rounded-lg p-4">
+                            <p className="text-gray-800 leading-relaxed text-base">
+                              {selectedProduct.displayDescription}
+                            </p>
+                          </div>
                         </div>
-                      </div>
-                    )}
+                      )}
 
                     {/* Product Description */}
                     <div className="mb-6">
@@ -2002,15 +2005,29 @@ export default function Index() {
                         What's included
                       </h3>
                       <div className="grid grid-cols-1 gap-4">
-                        {(selectedProduct.popupData?.whatsIncluded || [
-                          { icon: "Package", text: `Premium variety of snacks (${selectedProduct.size})` },
-                          { icon: "Gift", text: "Beautiful gift packaging" },
-                          { icon: "CheckCircle", text: "Greeting card included" },
-                          { icon: "Truck", text: "Fast shipping across the US" },
-                        ]).map((item, index) => {
+                        {(
+                          selectedProduct.popupData?.whatsIncluded || [
+                            {
+                              icon: "Package",
+                              text: `Premium variety of snacks (${selectedProduct.size})`,
+                            },
+                            { icon: "Gift", text: "Beautiful gift packaging" },
+                            {
+                              icon: "CheckCircle",
+                              text: "Greeting card included",
+                            },
+                            {
+                              icon: "Truck",
+                              text: "Fast shipping across the US",
+                            },
+                          ]
+                        ).map((item, index) => {
                           const IconComponent = getIconComponent(item.icon);
                           return (
-                            <div key={index} className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl">
+                            <div
+                              key={index}
+                              className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl"
+                            >
                               <IconComponent className="w-5 h-5 text-green-600" />
                               <span className="text-base text-gray-700">
                                 {item.text}
@@ -2027,14 +2044,28 @@ export default function Index() {
                         Shipping & Returns
                       </h3>
                       <div className="grid grid-cols-1 gap-3">
-                        {(selectedProduct.popupData?.shippingReturns || [
-                          { icon: "CheckCircle", text: "Free shipping on orders over $35" },
-                          { icon: "CheckCircle", text: "30-day satisfaction guarantee" },
-                          { icon: "CheckCircle", text: "Secure packaging guarantee" },
-                        ]).map((item, index) => {
+                        {(
+                          selectedProduct.popupData?.shippingReturns || [
+                            {
+                              icon: "CheckCircle",
+                              text: "Free shipping on orders over $35",
+                            },
+                            {
+                              icon: "CheckCircle",
+                              text: "30-day satisfaction guarantee",
+                            },
+                            {
+                              icon: "CheckCircle",
+                              text: "Secure packaging guarantee",
+                            },
+                          ]
+                        ).map((item, index) => {
                           const IconComponent = getIconComponent(item.icon);
                           return (
-                            <div key={index} className="flex items-center gap-3 p-3 bg-blue-50 rounded-xl">
+                            <div
+                              key={index}
+                              className="flex items-center gap-3 p-3 bg-blue-50 rounded-xl"
+                            >
                               <IconComponent className="w-5 h-5 text-blue-600" />
                               <span className="text-base text-gray-700">
                                 {item.text}
@@ -2057,7 +2088,8 @@ export default function Index() {
                       <ShoppingCart className="w-5 h-5 sm:w-6 sm:h-6" />
                       <div className="flex flex-col">
                         <span className="font-black text-sm sm:text-base">
-                          {selectedProduct.popupData?.buyButtonText || "BUY NOW ON WALMART"}
+                          {selectedProduct.popupData?.buyButtonText ||
+                            "BUY NOW ON WALMART"}
                         </span>
                       </div>
                       <div className="bg-yellow-400 text-blue-800 px-2 py-1 sm:px-3 sm:py-1.5 rounded-full text-sm sm:text-base font-black">
