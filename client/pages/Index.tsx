@@ -1106,7 +1106,7 @@ export default function Index() {
                         {/* Popular Badge */}
                         {index === 1 && (
                           <div className="absolute top-3 right-3 bg-gradient-to-r from-orange-500 to-orange-600 text-white px-3 py-1.5 rounded-xl text-sm font-bold shadow-xl">
-                            �� Popular
+                            ��� Popular
                           </div>
                         )}
 
@@ -1261,7 +1261,7 @@ export default function Index() {
 
                     {/* Box Contents Icons - playful visual */}
                     <div className="flex items-center gap-1">
-                      <span className="text-sm lg:text-base">�������</span>
+                      <span className="text-sm lg:text-base">�����</span>
                       <span className="text-sm lg:text-base">🍫</span>
                       <span className="text-sm lg:text-base">🥨</span>
                       <span className="text-xs text-gray-500 ml-2 font-medium">
@@ -1993,7 +1993,7 @@ export default function Index() {
                     {/* Mobile-Optimized Title + Rating */}
                     <div className="mb-4 sm:mb-6">
                       <h2 className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-bold text-gray-900 leading-tight mb-3 sm:mb-4">
-                        {selectedProduct.shortName || selectedProduct.name}
+                        {selectedProduct.displayTitle || selectedProduct.shortName || selectedProduct.name}
                       </h2>
 
                       {/* Mobile-Optimized Rating with gold stars */}
