@@ -678,21 +678,23 @@ export default function Index() {
     return adminData?.popups?.[sizeNumber as keyof typeof adminData.popups];
   };
 
-  // Handle product card click - show popup first
+  // Handle product card click - directly open full modal with popup data integrated
   const handleProductClick = (product: any) => {
     const popupData = getProductPopup(product);
-    if (popupData) {
-      setActivePopup({ product, popupData });
-    } else {
-      // Fallback to direct modal if no popup configured
-      setSelectedProduct(product);
-    }
-  };
 
-  // Open full product modal from popup
-  const openFullProductModal = (product: any) => {
-    setActivePopup(null);
-    setSelectedProduct(product);
+    // Create enhanced product object with popup data integrated
+    const enhancedProduct = {
+      ...product,
+      // Use popup data if available, otherwise fallback to product data
+      displayTitle: popupData?.title || product.shortName || product.name,
+      displayDescription: popupData?.description || product.description,
+      promotionalText: popupData?.promotionalText || product.promotionalText,
+      walmartLink: popupData?.orderNowLink || product.walmartLink,
+      // Keep original popup data for reference
+      popupData: popupData
+    };
+
+    setSelectedProduct(enhancedProduct);
   };
 
   // Swipe to close functionality
@@ -1259,7 +1261,7 @@ export default function Index() {
 
                     {/* Box Contents Icons - playful visual */}
                     <div className="flex items-center gap-1">
-                      <span className="text-sm lg:text-base">�����</span>
+                      <span className="text-sm lg:text-base">�������</span>
                       <span className="text-sm lg:text-base">🍫</span>
                       <span className="text-sm lg:text-base">🥨</span>
                       <span className="text-xs text-gray-500 ml-2 font-medium">
