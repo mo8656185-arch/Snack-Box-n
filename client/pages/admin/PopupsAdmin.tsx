@@ -326,7 +326,7 @@ const PopupsAdmin = () => {
                           description="Compelling headline for this product size"
                         >
                           <Input
-                            value={popup.title}
+                            value={popup?.title || ""}
                             onChange={(e) =>
                               updatePopup(size as keyof AdminData["popups"], {
                                 title: e.target.value,
@@ -341,7 +341,7 @@ const PopupsAdmin = () => {
                           description="Detailed description that highlights the benefits of this size"
                         >
                           <Textarea
-                            value={popup.description}
+                            value={popup?.description || ""}
                             onChange={(e) =>
                               updatePopup(size as keyof AdminData["popups"], {
                                 description: e.target.value,
@@ -357,7 +357,7 @@ const PopupsAdmin = () => {
                           description="Special offer or highlight for this product"
                         >
                           <Input
-                            value={popup.promotionalText}
+                            value={popup?.promotionalText || ""}
                             onChange={(e) =>
                               updatePopup(size as keyof AdminData["popups"], {
                                 promotionalText: e.target.value,
