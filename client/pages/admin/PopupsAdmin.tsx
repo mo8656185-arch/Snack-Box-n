@@ -223,8 +223,8 @@ const PopupsAdmin = () => {
       )}
 
       <AdminSection
-        title="Product Size Popups"
-        description="Configure popups that appear when customers click on each product card. Each popup should entice customers to make a purchase and provide a way to view full product details."
+        title="Product Modal Content"
+        description="Configure the content that appears in the product details modal when customers click on each product card. This content will be integrated into the main product modal to enhance the customer experience."
         onSave={handleSave}
         onReset={handleReset}
         saving={saving}
