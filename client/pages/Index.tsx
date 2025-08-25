@@ -1470,7 +1470,7 @@ export default function Index() {
           🍫
         </div>
         <div className="absolute top-16 right-32 text-xl opacity-10 animate-pulse delay-500">
-          ����
+          🥨
         </div>
 
         <div className="max-w-6xl mx-auto relative z-10">
@@ -2002,30 +2002,22 @@ export default function Index() {
                         What's included
                       </h3>
                       <div className="grid grid-cols-1 gap-4">
-                        <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl">
-                          <Package className="w-5 h-5 text-green-600" />
-                          <span className="text-base text-gray-700">
-                            Premium variety of snacks ({selectedProduct.size})
-                          </span>
-                        </div>
-                        <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl">
-                          <Gift className="w-5 h-5 text-green-600" />
-                          <span className="text-base text-gray-700">
-                            Beautiful gift packaging
-                          </span>
-                        </div>
-                        <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl">
-                          <CheckCircle className="w-5 h-5 text-green-600" />
-                          <span className="text-base text-gray-700">
-                            Greeting card included
-                          </span>
-                        </div>
-                        <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl">
-                          <Truck className="w-5 h-5 text-green-600" />
-                          <span className="text-base text-gray-700">
-                            Fast shipping across the US
-                          </span>
-                        </div>
+                        {(selectedProduct.popupData?.whatsIncluded || [
+                          { icon: "Package", text: `Premium variety of snacks (${selectedProduct.size})` },
+                          { icon: "Gift", text: "Beautiful gift packaging" },
+                          { icon: "CheckCircle", text: "Greeting card included" },
+                          { icon: "Truck", text: "Fast shipping across the US" },
+                        ]).map((item, index) => {
+                          const IconComponent = getIconComponent(item.icon);
+                          return (
+                            <div key={index} className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl">
+                              <IconComponent className="w-5 h-5 text-green-600" />
+                              <span className="text-base text-gray-700">
+                                {item.text}
+                              </span>
+                            </div>
+                          );
+                        })}
                       </div>
                     </div>
 
