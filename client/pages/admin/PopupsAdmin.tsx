@@ -427,10 +427,10 @@ const PopupsAdmin = () => {
                                   updatePopup(
                                     size as keyof AdminData["popups"],
                                     {
-                                      title: product.shortName,
-                                      orderNowLink: product.walmartLink,
+                                      title: product?.shortName || "",
+                                      orderNowLink: product?.walmartLink || "",
                                       promotionalText:
-                                        product.promotionalText || "",
+                                        product?.promotionalText || "",
                                     },
                                   )
                                 }
@@ -448,7 +448,7 @@ const PopupsAdmin = () => {
                     <ImageUpload
                       label="Popup Image"
                       description="Product image for the popup (will use product image if not provided)"
-                      value={popup.image}
+                      value={popup?.image || ""}
                       onChange={(url) =>
                         updatePopup(size as keyof AdminData["popups"], {
                           image: url,
