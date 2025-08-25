@@ -1470,7 +1470,7 @@ export default function Index() {
           🍫
         </div>
         <div className="absolute top-16 right-32 text-xl opacity-10 animate-pulse delay-500">
-          🥨
+          ����
         </div>
 
         <div className="max-w-6xl mx-auto relative z-10">
@@ -1838,7 +1838,7 @@ export default function Index() {
                   <div className="hidden lg:flex h-full p-8 items-center justify-center relative">
                     <div className="relative w-full h-full max-w-md mx-auto flex items-center justify-center">
                       <img
-                        src={`${selectedProduct.image}&quality=90&format=webp&width=400`}
+                        src={`${(selectedProduct.popupData?.image || selectedProduct.image)}&quality=90&format=webp&width=400`}
                         alt={`Gift A Snack ${selectedProduct.size} Premium Snack Box with Chips Crackers Cookies and Candy - Detailed Product View`}
                         className="max-w-full max-h-full object-contain rounded-2xl shadow-2xl"
                         loading="lazy"
