@@ -102,7 +102,7 @@ const PopupsAdmin = () => {
         </button>
 
         <div className="p-6">
-          {popup.image && (
+          {popup?.image && (
             <div className="mb-4">
               <img
                 src={popup.image}
@@ -112,19 +112,19 @@ const PopupsAdmin = () => {
             </div>
           )}
 
-          {popup.title && (
+          {popup?.title && (
             <h3 className="text-xl font-bold text-gray-900 mb-3">
               {popup.title}
             </h3>
           )}
 
-          {popup.description && (
+          {popup?.description && (
             <p className="text-gray-600 mb-4 leading-relaxed">
               {popup.description}
             </p>
           )}
 
-          {popup.promotionalText && (
+          {popup?.promotionalText && (
             <div className="bg-gradient-to-r from-logo-green/10 to-green-400/10 border border-logo-green/20 rounded-lg p-3 mb-4">
               <p className="text-logo-green font-semibold text-sm">
                 🎉 {popup.promotionalText}
@@ -133,7 +133,7 @@ const PopupsAdmin = () => {
           )}
 
           <div className="flex gap-3">
-            {popup.orderNowLink && (
+            {popup?.orderNowLink && (
               <Button
                 className="flex-1 bg-logo-green hover:bg-green-600 text-white font-bold"
                 onClick={() => {
@@ -154,7 +154,7 @@ const PopupsAdmin = () => {
               }}
             >
               <Eye className="w-4 h-4 mr-2" />
-              {popup.viewDetailsButtonText}
+              {popup?.viewDetailsButtonText || "View Full Details"}
             </Button>
           </div>
         </div>
