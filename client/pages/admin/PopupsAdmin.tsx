@@ -398,17 +398,17 @@ const PopupsAdmin = () => {
                         </FormGroup>
 
                         <FormGroup
-                          label="View Details Button Text"
-                          description="Text for the 'View Full Details' button"
+                          label="Buy Button Text"
+                          description="Text for the purchase button in the product modal"
                         >
                           <Input
-                            value={popup?.viewDetailsButtonText || ""}
+                            value={popup?.buyButtonText || ""}
                             onChange={(e) =>
                               updatePopup(size as keyof AdminData["popups"], {
-                                viewDetailsButtonText: e.target.value,
+                                buyButtonText: e.target.value,
                               })
                             }
-                            placeholder="View Full Details"
+                            placeholder="BUY NOW ON WALMART"
                           />
                         </FormGroup>
 
