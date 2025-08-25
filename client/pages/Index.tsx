@@ -94,10 +94,6 @@ export default function Index() {
   useSEOData(); // Apply SEO meta tags
 
   const [selectedProduct, setSelectedProduct] = useState<any>(null);
-  const [activePopup, setActivePopup] = useState<{
-    product: any;
-    popupData: any;
-  } | null>(null);
   const [showFloatingButton, setShowFloatingButton] = useState(false);
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
