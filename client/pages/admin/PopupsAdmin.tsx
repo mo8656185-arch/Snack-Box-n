@@ -15,42 +15,10 @@ import { Eye, Package2, ShoppingCart, ExternalLink } from "lucide-react";
 type PopupData = AdminData["popups"][35];
 
 const PopupsAdmin = () => {
-  const [data, setData] = useState<AdminData["popups"]>({
-    35: {
-      title: "",
-      description: "",
-      image: "",
-      promotionalText: "",
-      orderNowLink: "",
-      viewDetailsButtonText: "View Full Details",
-    },
-    42: {
-      title: "",
-      description: "",
-      image: "",
-      promotionalText: "",
-      orderNowLink: "",
-      viewDetailsButtonText: "View Full Details",
-    },
-    52: {
-      title: "",
-      description: "",
-      image: "",
-      promotionalText: "",
-      orderNowLink: "",
-      viewDetailsButtonText: "View Full Details",
-    },
-    105: {
-      title: "",
-      description: "",
-      image: "",
-      promotionalText: "",
-      orderNowLink: "",
-      viewDetailsButtonText: "View Full Details",
-    },
-  });
+  // Initialize with null to show loading state, then load actual data
+  const [data, setData] = useState<AdminData["popups"] | null>(null);
   const [saving, setSaving] = useState(false);
-  const [originalData, setOriginalData] = useState<AdminData["popups"]>(data);
+  const [originalData, setOriginalData] = useState<AdminData["popups"] | null>(null);
   const [products, setProducts] = useState<AdminData["products"]>([]);
   const [previewPopup, setPreviewPopup] = useState<{
     popup: PopupData;
@@ -59,6 +27,7 @@ const PopupsAdmin = () => {
 
   useEffect(() => {
     const adminData = getAdminData();
+    // Load existing popup data or use defaults
     setData(adminData.popups);
     setOriginalData(adminData.popups);
     setProducts(adminData.products);
@@ -493,7 +462,7 @@ const PopupsAdmin = () => {
                   <h4 className="font-semibold mb-2">Best Practices:</h4>
                   <ul className="space-y-1">
                     <li>• Highlight unique benefits of each size</li>
-                    <li>• Use compelling promotional text</li>
+                    <li>�� Use compelling promotional text</li>
                     <li>• Include time-sensitive offers when possible</li>
                     <li>• Test all purchase links regularly</li>
                     <li>• Keep descriptions concise but persuasive</li>
